@@ -691,7 +691,10 @@ const LOCALES = {
   zh:{tag:"zh", ui:"zh", cap:"zh-CN", audio:"zh", name:"中文（简体）"}
 };
 
-const player = videojs("selPlayer");
+const player = (function(){
+  try { return window.videojs ? videojs("selPlayer") : null; }
+  catch (e) { console.warn("player unavailable", e); return null; }
+})();
 let current = "en";
 const WANT_LABEL = {"en":"English (caption editor)"};
 
@@ -713,6 +716,7 @@ function applyCopy(){
 }
 
 function applyPlayer(){
+  if (!player) return;
   const loc = LOCALES[current];
   try { player.language(loc.ui); } catch(e){}
 
@@ -791,7 +795,7 @@ function download(name, text){
 document.getElementById("dlDict").addEventListener("click", function(e){ e.preventDefault(); download("sel-caption-dictionary.csv", "from,to\nA C S E L E R A T O R,acSELerator\nA S L,ASL\ncell 2414,SEL-2414\ncell twenty four fourteen,SEL-2414\nDNP 3,DNP3\nEthernet IP,EtherNet/IP\nforward controller settings,Forward Controller Settings\nI E C 61850,IEC 61850\nJacob Scog,Jacob Skaug\nJacob Skog,Jacob Skaug\nJacob's cog,Jacob Skaug\nL T C,LTC\nmirrored bits,MIRRORED BITS\nQuick Set,QuickSet\nR T A C,RTAC\nS C L,SEL\nS E L,SEL\nSchweizer Engineering Laboratories,Schweitzer Engineering Laboratories\nSEL 2240,SEL-2240\nSEL 2414,SEL-2414\nSEL 487E,SEL-487E\nSEL 751,SEL-751\nSEL boot,SELboot\nSEL C662,SEL-C662\nsel inc dot com,selinc.com\nSEL twenty four fourteen,SEL-2414\nSEL-2414 tack,SEL-2414 TAC\nsell 2414,SEL-2414\nsixty one eight fifty,IEC 61850\nSkog,Skaug\nSwitzer Engineering Laboratories,Schweitzer Engineering Laboratories\nT A C,TAC\nT I D L,TiDL\ntap changer controller or LTC,\"tap changer controller, or LTC\"\ntap position status,Tap Position Status\nthe tack,the TAC\n"); });
 document.getElementById("dlGloss").addEventListener("click", function(e){ e.preventDefault(); download("sel-caption-glossary.csv", "acSELerator\nAuto mode\nAxion\nband edge\ncenter band\nDNP3\nEtherNet/IP\nForward Controller Settings\nGOOSE\nGrid Configurator\nIEC 61850\nJacob Skaug\nload tap changer\nlower\nLTC\nManual mode\nMIRRORED BITS\nModbus\nQuickSet\nraise\nRTAC\nSampled Values\nSchweitzer Engineering Laboratories\nSEL\nSEL-2240\nSEL-2414\nSEL-2414 TAC\nSEL-487E\nSEL-751\nSEL-C662\nSELboot\nsubstation\nTAC\ntap\ntap changer\ntap position\nTap Position Status\nTiDL\ntransformer automation controller\n"); });
 
-player.ready(function(){ applyCopy(); applyPlayer(); });
+if (player) player.ready(function(){ applyCopy(); applyPlayer(); });
 applyCopy();
 
 // honour ?lang=es and the browser locale
