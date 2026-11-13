@@ -63,8 +63,7 @@ select.lang:focus-visible{outline:2px solid #40CB6C;outline-offset:2px}
 .player-shell{background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 2px rgba(4,35,63,.05)}
 .player-shell .video-js{width:100%;aspect-ratio:16/9;height:auto;background:#000}
 .player-shell .video-js.vjs-fluid{padding-top:0!important;height:auto!important;aspect-ratio:16/9}
-.player-shell .vjs-title-bar-description{display:none}
-.player-shell .vjs-title-bar{background:linear-gradient(180deg,rgba(0,0,0,.82),rgba(0,0,0,0))}
+.player-shell .vjs-title-bar{display:none}
 .player-note{font-size:.9rem;color:#2A5B7C;margin:16px 2px 0}
 .meta-card{margin-top:26px;border:1px solid var(--border);border-radius:var(--radius);background:#fff;padding:24px 26px}
 .meta-card h3{font-size:1.18rem;margin-bottom:10px}
@@ -710,8 +709,6 @@ function applyCopy(){
   document.getElementById("metaTitle").textContent = v.name;
   document.getElementById("metaDesc").textContent = v.description;
   document.getElementById("metaLang").textContent = LOCALES[current].name + " · " + LOCALES[current].cap;
-  // the player's own title overlay does not read metadata variants, so the page hands it the localized title
-  document.querySelectorAll(".vjs-title-bar-title").forEach(function(el){ el.textContent = v.name; });
 }
 
 function applyPlayer(){
