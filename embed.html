@@ -710,6 +710,8 @@ function applyCopy(){
   document.getElementById("metaTitle").textContent = v.name;
   document.getElementById("metaDesc").textContent = v.description;
   document.getElementById("metaLang").textContent = LOCALES[current].name + " · " + LOCALES[current].cap;
+  // the player's own title overlay does not read metadata variants, so the page hands it the localized title
+  document.querySelectorAll(".vjs-title-bar-title").forEach(function(el){ el.textContent = v.name; });
 }
 
 function applyPlayer(){
